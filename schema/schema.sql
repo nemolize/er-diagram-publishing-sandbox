@@ -92,5 +92,6 @@ CREATE TABLE reviews (
 CREATE TABLE carts (
   id          bigserial PRIMARY KEY,
   user_id     bigint NOT NULL,
-  updated_at  timestamptz NOT NULL DEFAULT now()
+  updated_at  timestamptz NOT NULL DEFAULT now(),
+  note        text
 );
