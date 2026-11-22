@@ -1,0 +1,27 @@
+name: er-wiki
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  er-wiki:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Push docs/er.md to the wiki
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git clone "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.wiki.git" wiki
+          cp docs/er.md wiki/ER-diagram.md
+          cd wiki
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ER-diagram.md
+          git diff --cached --quiet && { echo "wiki is current"; exit 0; }
+          git commit -m "Update the ER diagram"
+          git push origin HEAD

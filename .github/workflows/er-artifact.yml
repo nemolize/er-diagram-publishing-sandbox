@@ -1,0 +1,37 @@
+name: er-artifact
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  er-artifact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: shop
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d shop"
+          --health-interval 2s
+          --health-retries 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/regen
+      - name: Render the diagram as SVG
+        run: |
+          sudo apt-get install -y -qq graphviz
+          tbls doc --force --er-format svg
+      - uses: actions/upload-artifact@v7.0.2
+        with:
+          name: er-diagram
+          path: |
+            docs/er.md
+            docs/tbls/schema.svg
