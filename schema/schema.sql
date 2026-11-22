@@ -6,6 +6,7 @@ CREATE TABLE users (
   id          bigserial PRIMARY KEY,
   email       text NOT NULL UNIQUE,
   name        text NOT NULL,
+  display_name text,
   created_at  timestamptz NOT NULL DEFAULT now()
 );
 COMMENT ON TABLE users IS 'Customer accounts';
@@ -31,6 +32,7 @@ CREATE TABLE products (
   category_id bigint NOT NULL,
   sku         text NOT NULL UNIQUE,
   name        text NOT NULL,
+  display_name text,
   price_cents integer NOT NULL CHECK (price_cents >= 0)
 );
 COMMENT ON TABLE products IS 'Items for sale';
@@ -90,5 +92,6 @@ CREATE TABLE reviews (
 CREATE TABLE carts (
   id          bigserial PRIMARY KEY,
   user_id     bigint NOT NULL,
-  updated_at  timestamptz NOT NULL DEFAULT now()
+  updated_at  timestamptz NOT NULL DEFAULT now(),
+  note        text
 );
