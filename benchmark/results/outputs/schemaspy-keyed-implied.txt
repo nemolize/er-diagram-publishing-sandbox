@@ -1,0 +1,13 @@
+addresses->users
+carts->users
+order_items->orders
+order_items->products
+orders->addresses
+orders->coupons
+orders->users
+payments->orders
+product_images->products
+products->categories
+reviews->products
+reviews->users
+shipments->orders

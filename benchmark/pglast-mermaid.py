@@ -1,16 +1,11 @@
 """Parse a schema file with pglast and print a Mermaid erDiagram.
 
-Declared foreign keys are drawn with a solid line. With --infer, a column named
-<name>_id with no declared foreign key is drawn (dotted) to the table <name>s
-(or to its own table for parent_id) when that table exists.
+Reads only inline column constraints (`REFERENCES` after a column), not table-level or ALTER TABLE ones.
 Usage: python pglast-mermaid.py schema.sql [--infer]
 """
 import sys
 from pglast import parse_sql
 from pglast.enums import ConstrType
-
-def table_name(rel):
-    return rel.relname
 
 def main(path, infer):
     tables, declared = {}, set()
@@ -18,7 +13,7 @@ def main(path, infer):
         stmt = raw.stmt
         if stmt.__class__.__name__ != "CreateStmt":
             continue
-        name = table_name(stmt.relation)
+        name = stmt.relation.relname
         cols = []
         for elt in stmt.tableElts:
             kind = elt.__class__.__name__

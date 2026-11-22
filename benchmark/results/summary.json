@@ -1,77 +1,142 @@
 {
   "postgres": {
-    "image": "postgres:18-alpine",
-    "version": "PostgreSQL 18.7 on aarch64-unknown-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit",
-    "imageId": "sha256:05c6f63b948f725d3f6d07568e6ca4206eed983ade4e1617d38201d4bb0e22e6"
+    "image": "postgres@sha256:1018733457011bf88d81db98cf43aac6d5150afc18787dbe204771fedf80ff95",
+    "version": "PostgreSQL 18.7 on aarch64-unknown-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit"
   },
   "tbls": {
     "version": "1.97.0",
     "input": "live database",
     "output": "Markdown with a Mermaid block (also SVG/PNG with --er-format)",
-    "medianMs": 117,
+    "medianMs": 152,
+    "idleBefore": [
+      0.913,
+      0.923,
+      0.918,
+      0.919,
+      0.916
+    ],
+    "failed": false,
     "declaredDrawn": 3,
     "undeclaredDrawn": 0,
     "extra": [],
-    "failed": false
+    "filesWritten": 14
   },
   "tblsRelations": {
+    "version": "1.97.0",
     "input": "live database + 11 relations written in .tbls.yml",
-    "medianMs": 114,
+    "output": "Markdown with a Mermaid block (also SVG/PNG with --er-format)",
+    "medianMs": 141,
+    "idleBefore": [
+      0.912,
+      0.92,
+      0.906,
+      0.913,
+      0.923
+    ],
+    "failed": false,
     "declaredDrawn": 3,
     "undeclaredDrawn": 11,
     "extra": [],
-    "failed": false
+    "filesWritten": 14
   },
   "pgMermaid": {
     "version": "0.2.1",
     "input": "live database",
     "output": "Markdown with a Mermaid block",
-    "medianMs": 142,
+    "medianMs": 149,
+    "idleBefore": [
+      0.885,
+      0.918,
+      0.907,
+      0.914,
+      0.919
+    ],
+    "failed": false,
     "declaredDrawn": 3,
     "undeclaredDrawn": 0,
-    "extra": [],
-    "failed": false
+    "extra": []
   },
   "schemaspy": {
-    "version": "7.0.2",
-    "image": "schemaspy/schemaspy:latest",
+    "image": "schemaspy/schemaspy@sha256:c8f98116a5cfe4b00b379eeb23b2022cdea4c9192cbccb843a75049e752479b7",
     "input": "live database (JDBC)",
     "output": "HTML site with PNG/SVG diagrams, no Mermaid",
-    "medianMs": 1682,
+    "medianMs": 1595,
+    "idleBefore": [
+      0.93,
+      0.86,
+      0.877,
+      0.869,
+      0.909
+    ],
+    "failed": false,
     "declaredDrawn": 3,
     "undeclaredDrawn": 0,
     "extra": [],
+    "version": "7.0.2",
     "filesWritten": 223,
-    "impliedRelationships": 0,
-    "logErrors": [
-      "WARN  - Failed to retrieve stored procedure/function details using sql 'select r.routine_n"
-    ],
-    "failed": false
+    "bytesWritten": 11517952,
+    "impliedEdges": 0,
+    "logProblems": [
+      "............ERROR - Failed to retrieve comment for catalog 'shop' using SQL 'SELECT datname AS catalog_name, p",
+      "WARN  - Failed to retrieve stored procedure/function details using sql 'select r.routine_name || '(' || oidvec"
+    ]
   },
-  "schemaspyImpliedProbe": {
-    "impliedRelationships": 0
+  "schemaspyImplied": {
+    "idKeyedChild": {
+      "edges": []
+    },
+    "namedKeyedChild": {
+      "edges": [
+        "invoices->customers"
+      ]
+    },
+    "idKeyedParent": {
+      "edges": [
+        "invoices->customers"
+      ]
+    },
+    "keyedSample": {
+      "edges": 13,
+      "declaredDrawn": 3,
+      "undeclaredDrawn": 10,
+      "extra": []
+    }
   },
   "pglast": {
     "version": "8.9",
     "input": "schema file, no database",
     "output": "Mermaid from a script of our own",
-    "scriptLines": 52,
-    "medianMs": 37,
+    "scriptLines": 47,
+    "medianMs": 77,
+    "idleBefore": [
+      0.921,
+      0.921,
+      0.924,
+      0.929,
+      0.927
+    ],
+    "failed": false,
     "declaredDrawn": 3,
     "undeclaredDrawn": 0,
-    "extra": [],
-    "failed": false
+    "extra": []
   },
   "pglastInfer": {
     "version": "8.9",
     "input": "schema file, no database",
     "output": "Mermaid from a script of our own",
-    "scriptLines": 52,
-    "medianMs": 37,
+    "scriptLines": 47,
+    "medianMs": 34,
+    "idleBefore": [
+      0.921,
+      0.923,
+      0.917,
+      0.913,
+      0.927
+    ],
+    "failed": false,
     "declaredDrawn": 3,
     "undeclaredDrawn": 9,
-    "extra": [],
-    "failed": false
+    "extra": []
   },
   "handwritten": {
     "input": "typed by hand",
@@ -84,11 +149,21 @@
   "meta": {
     "node": "v26.13.1",
     "reps": 5,
-    "date": "2026-11-22T06:16:46.034Z",
+    "minIdle": 0.75,
+    "date": "2026-11-22T06:51:23.961Z",
     "truth": {
       "declared": 3,
       "undeclared": 11
     },
-    "failures": []
+    "failures": [],
+    "env": {
+      "os": "Darwin 27.2.0 arm64",
+      "macos": "27.2.1",
+      "cpu": "Apple M2 Max",
+      "cores": 12,
+      "memoryGiB": 32,
+      "docker": "29.9.3",
+      "python": "Python 3.12.9"
+    }
   }
 }

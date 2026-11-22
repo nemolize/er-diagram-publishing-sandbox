@@ -1,7 +1,7 @@
 node_modules/
 tools/pyenv/
 results/schemaspy/
-results/schemaspy-probe/
 results/tbls/
 results/tbls-relations/
 .work/
+results/schemaspy-*/
