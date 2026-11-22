@@ -1,0 +1,91 @@
+erDiagram
+
+    addresses {
+        id bigint PK "not null"
+        user_id bigint "not null"
+        city text "not null"
+        line1 text "not null"
+        postal_code text "not null"
+    }
+
+    carts {
+        id bigint PK "not null"
+        user_id bigint "not null"
+        updated_at timestamp_with_time_zone "not null"
+    }
+
+    categories {
+        id bigint PK "not null"
+        name text "not null"
+        parent_id bigint "null"
+    }
+
+    coupons {
+        id bigint PK "not null"
+        percent_off integer "not null"
+        code text "not null"
+    }
+
+    order_items {
+        id bigint PK "not null"
+        order_id bigint FK "not null"
+        product_id bigint FK "not null"
+        quantity integer "not null"
+    }
+
+    orders {
+        id bigint PK "not null"
+        address_id bigint "not null"
+        user_id bigint "not null"
+        status text "not null"
+        placed_at timestamp_with_time_zone "not null"
+        coupon_id bigint "null"
+    }
+
+    payments {
+        id bigint PK "not null"
+        order_id bigint FK "not null"
+        amount_cents integer "not null"
+        paid_at timestamp_with_time_zone "null"
+    }
+
+    product_images {
+        id bigint PK "not null"
+        product_id bigint "not null"
+        position integer "not null"
+        url text "not null"
+    }
+
+    products {
+        id bigint PK "not null"
+        category_id bigint "not null"
+        price_cents integer "not null"
+        name text "not null"
+        sku text "not null"
+    }
+
+    reviews {
+        id bigint PK "not null"
+        product_id bigint "not null"
+        user_id bigint "not null"
+        rating integer "not null"
+        body text "null"
+    }
+
+    shipments {
+        id bigint PK "not null"
+        order_id bigint "not null"
+        carrier text "not null"
+        shipped_at timestamp_with_time_zone "null"
+    }
+
+    users {
+        id bigint PK "not null"
+        email text "not null"
+        name text "not null"
+        created_at timestamp_with_time_zone "not null"
+    }
+
+    orders ||--o{ order_items : "order_items(order_id) -> orders(id)"
+    orders ||--o{ payments : "payments(order_id) -> orders(id)"
+    products ||--o{ order_items : "order_items(product_id) -> products(id)"

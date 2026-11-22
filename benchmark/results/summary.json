@@ -1,0 +1,94 @@
+{
+  "postgres": {
+    "image": "postgres:18-alpine",
+    "version": "PostgreSQL 18.7 on aarch64-unknown-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit",
+    "imageId": "sha256:05c6f63b948f725d3f6d07568e6ca4206eed983ade4e1617d38201d4bb0e22e6"
+  },
+  "tbls": {
+    "version": "1.97.0",
+    "input": "live database",
+    "output": "Markdown with a Mermaid block (also SVG/PNG with --er-format)",
+    "medianMs": 117,
+    "declaredDrawn": 3,
+    "undeclaredDrawn": 0,
+    "extra": [],
+    "failed": false
+  },
+  "tblsRelations": {
+    "input": "live database + 11 relations written in .tbls.yml",
+    "medianMs": 114,
+    "declaredDrawn": 3,
+    "undeclaredDrawn": 11,
+    "extra": [],
+    "failed": false
+  },
+  "pgMermaid": {
+    "version": "0.2.1",
+    "input": "live database",
+    "output": "Markdown with a Mermaid block",
+    "medianMs": 142,
+    "declaredDrawn": 3,
+    "undeclaredDrawn": 0,
+    "extra": [],
+    "failed": false
+  },
+  "schemaspy": {
+    "version": "7.0.2",
+    "image": "schemaspy/schemaspy:latest",
+    "input": "live database (JDBC)",
+    "output": "HTML site with PNG/SVG diagrams, no Mermaid",
+    "medianMs": 1682,
+    "declaredDrawn": 3,
+    "undeclaredDrawn": 0,
+    "extra": [],
+    "filesWritten": 223,
+    "impliedRelationships": 0,
+    "logErrors": [
+      "WARN  - Failed to retrieve stored procedure/function details using sql 'select r.routine_n"
+    ],
+    "failed": false
+  },
+  "schemaspyImpliedProbe": {
+    "impliedRelationships": 0
+  },
+  "pglast": {
+    "version": "8.9",
+    "input": "schema file, no database",
+    "output": "Mermaid from a script of our own",
+    "scriptLines": 52,
+    "medianMs": 37,
+    "declaredDrawn": 3,
+    "undeclaredDrawn": 0,
+    "extra": [],
+    "failed": false
+  },
+  "pglastInfer": {
+    "version": "8.9",
+    "input": "schema file, no database",
+    "output": "Mermaid from a script of our own",
+    "scriptLines": 52,
+    "medianMs": 37,
+    "declaredDrawn": 3,
+    "undeclaredDrawn": 9,
+    "extra": [],
+    "failed": false
+  },
+  "handwritten": {
+    "input": "typed by hand",
+    "output": "Mermaid",
+    "declaredDrawn": 3,
+    "undeclaredDrawn": 11,
+    "extra": [],
+    "failed": false
+  },
+  "meta": {
+    "node": "v26.13.1",
+    "reps": 5,
+    "date": "2026-11-22T06:16:46.034Z",
+    "truth": {
+      "declared": 3,
+      "undeclared": 11
+    },
+    "failures": []
+  }
+}

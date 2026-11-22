@@ -1,0 +1,7 @@
+{
+  "name": "er-diagram-tools",
+  "private": true,
+  "dependencies": {
+    "pg-mermaid": "0.2.1"
+  }
+}
