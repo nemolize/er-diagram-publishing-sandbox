@@ -1,0 +1,78 @@
+erDiagram
+  users {
+    bigserial id PK
+    text email
+    text name
+    timestamptz created_at
+  }
+  addresses {
+    bigserial id PK
+    int8 user_id
+    text postal_code
+    text line1
+    text city
+  }
+  categories {
+    bigserial id PK
+    int8 parent_id
+    text name
+  }
+  products {
+    bigserial id PK
+    int8 category_id
+    text sku
+    text name
+    int4 price_cents
+  }
+  product_images {
+    bigserial id PK
+    int8 product_id
+    text url
+    int4 position
+  }
+  coupons {
+    bigserial id PK
+    text code
+    int4 percent_off
+  }
+  orders {
+    bigserial id PK
+    int8 user_id
+    int8 address_id
+    int8 coupon_id
+    text status
+    timestamptz placed_at
+  }
+  order_items {
+    bigserial id PK
+    int8 order_id
+    int8 product_id
+    int4 quantity
+  }
+  payments {
+    bigserial id PK
+    int8 order_id
+    int4 amount_cents
+    timestamptz paid_at
+  }
+  shipments {
+    bigserial id PK
+    int8 order_id
+    text carrier
+    timestamptz shipped_at
+  }
+  reviews {
+    bigserial id PK
+    int8 product_id
+    int8 user_id
+    int4 rating
+    text body
+  }
+  carts {
+    bigserial id PK
+    int8 user_id
+    timestamptz updated_at
+  }
+  orders ||--o{ order_items : "order_id"
+  products ||--o{ order_items : "product_id"
+  orders ||--o{ payments : "order_id"

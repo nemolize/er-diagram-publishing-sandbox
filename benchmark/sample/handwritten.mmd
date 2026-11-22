@@ -1,0 +1,27 @@
+erDiagram
+  users ||--o{ addresses : "user_id"
+  users ||--o{ orders : "user_id"
+  users ||--o{ reviews : "user_id"
+  users ||--o{ carts : "user_id"
+  addresses ||--o{ orders : "address_id"
+  coupons |o--o{ orders : "coupon_id"
+  categories |o--o{ categories : "parent_id"
+  categories ||--o{ products : "category_id"
+  products ||--o{ product_images : "product_id"
+  products ||--o{ reviews : "product_id"
+  products ||--o{ order_items : "product_id"
+  orders ||--o{ order_items : "order_id"
+  orders ||--o{ payments : "order_id"
+  orders ||--o{ shipments : "order_id"
+  users { bigint id PK }
+  addresses { bigint id PK }
+  categories { bigint id PK }
+  products { bigint id PK }
+  product_images { bigint id PK }
+  coupons { bigint id PK }
+  orders { bigint id PK }
+  order_items { bigint id PK }
+  payments { bigint id PK }
+  shipments { bigint id PK }
+  reviews { bigint id PK }
+  carts { bigint id PK }

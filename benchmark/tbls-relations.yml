@@ -1,0 +1,49 @@
+dsn: postgres://postgres:postgres@127.0.0.1:55434/shop?sslmode=disable
+docPath: results/tbls-relations
+er:
+  format: mermaid
+relations:
+  - table: addresses
+    columns: [user_id]
+    parentTable: users
+    parentColumns: [id]
+  - table: categories
+    columns: [parent_id]
+    parentTable: categories
+    parentColumns: [id]
+  - table: products
+    columns: [category_id]
+    parentTable: categories
+    parentColumns: [id]
+  - table: product_images
+    columns: [product_id]
+    parentTable: products
+    parentColumns: [id]
+  - table: orders
+    columns: [user_id]
+    parentTable: users
+    parentColumns: [id]
+  - table: orders
+    columns: [address_id]
+    parentTable: addresses
+    parentColumns: [id]
+  - table: orders
+    columns: [coupon_id]
+    parentTable: coupons
+    parentColumns: [id]
+  - table: shipments
+    columns: [order_id]
+    parentTable: orders
+    parentColumns: [id]
+  - table: reviews
+    columns: [product_id]
+    parentTable: products
+    parentColumns: [id]
+  - table: reviews
+    columns: [user_id]
+    parentTable: users
+    parentColumns: [id]
+  - table: carts
+    columns: [user_id]
+    parentTable: users
+    parentColumns: [id]

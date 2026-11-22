@@ -1,0 +1,20 @@
+{
+  "repo": "nemolize/er-diagram-publishing-sandbox",
+  "commit": "5cdeb05875c0a94804d43714c5116a290c1811e0",
+  "measuredOn": "2026-11-22",
+  "tools": { "tbls": "v1.97.0 (setup-tbls action v1)", "postgres": "postgres:18-alpine service", "runner": "ubuntu-latest, image ubuntu-26.04 20261116.202.1" },
+  "main": "ruleset: pull request required, status check er-check required, no bypass actors",
+  "observations": [
+    { "id": "stale-check-red", "claim": "A pull request that changes schema/schema.sql without regenerating docs/er.md fails the er-check job at 'git diff --exit-code'; mergeStateStatus is BLOCKED and a merge is refused ('the base branch policy prohibits the merge')", "run": 44993847346 },
+    { "id": "stale-check-green", "claim": "The same pull request passes once docs/er.md is regenerated", "run": 44993742524 },
+    { "id": "wrong-red", "claim": "The first red run was an unresolvable action name (k1LoW/install-tbls-action), not staleness; the correct action is k1LoW/setup-tbls", "run": 44993677916 },
+    { "id": "push-main-rejected", "claim": "A workflow with contents: write pushing the regenerated file to main is rejected: GH013 'Changes must be made through a pull request' and 'Required status check er-check is expected'", "run": 44993861794 },
+    { "id": "open-pr-disabled", "claim": "Opening a pull request with the built-in token fails by default: 'GitHub Actions is not permitted to create or approve pull requests'; the setting can_approve_pull_request_reviews was false", "run": 44993898438 },
+    { "id": "open-pr-enabled", "claim": "After enabling that setting the pull request opens; the er-check run for it is created with conclusion action_required and 0 jobs, so the PR has no check and stays BLOCKED until a person approves the run (POST /actions/runs/{id}/approve); after approval er-check ran and passed, and the PR merged", "run": 44993979151 },
+    { "id": "wiki-missing", "claim": "With has_wiki true, git ls-remote on <repo>.wiki.git answers 'Repository not found' until the first page is created in the web UI; afterwards it answers", "run": null },
+    { "id": "wiki-push", "claim": "A workflow with contents: write clones the wiki with the built-in token and pushes a page; no pull request, no ruleset change; the page renders the Mermaid block; no pull request check covers the page", "run": 44994309812 },
+    { "id": "artifact", "claim": "upload-artifact stores docs/er.md and the SVG: 5935 bytes zipped, expires 90 days after the run, download URL answers 401 without credentials", "run": 44994338331 },
+    { "id": "pages", "claim": "POST /pages with build_type workflow enables Pages; a workflow with pages: write and id-token: write deployed an SVG; the URL answers 200 without credentials (the repository is public)", "run": 44994340644 },
+    { "id": "screenshot", "claim": "github.com renders the Mermaid block of docs/er.md as a diagram (images/er-diagram-from-schema-file/github-rendered.png)", "run": null }
+  ]
+}

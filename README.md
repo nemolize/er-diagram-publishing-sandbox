@@ -6,3 +6,4 @@ Throwaway repository for an article comparing where to publish an ER diagram gen
 - `schema/schema.sql` is the only hand-edited input.
 - `docs/er.md` holds the Mermaid ER diagram that GitHub draws; `.github/workflows/` holds the experiments.
 - `main` is protected by a ruleset (pull request and the `er-check` status check required).
+- `benchmark/` holds the runner, the sample schema and the results of the tool comparison.
