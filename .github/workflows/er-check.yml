@@ -1,0 +1,43 @@
+name: er-check
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  er-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: shop
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d shop"
+          --health-interval 2s
+          --health-retries 30
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install tbls
+        uses: k1LoW/install-tbls-action@v1
+        with:
+          version: v1.97.0
+      - name: Apply the schema file
+        run: psql "postgres://postgres:postgres@127.0.0.1:5432/shop" -v ON_ERROR_STOP=1 -q -f schema/schema.sql
+      - name: Regenerate the diagram
+        run: |
+          tbls doc --force
+          python3 - <<'PY'
+          import re
+          text = open("docs/tbls/README.md").read()
+          block = re.search(r"```mermaid\n.*?```", text, re.S).group(0)
+          open("docs/er.md", "w").write("# ER diagram\n\n" + block + "\n")
+          PY
+      - name: Fail when the committed diagram is stale
+        run: git diff --exit-code -- docs/er.md
