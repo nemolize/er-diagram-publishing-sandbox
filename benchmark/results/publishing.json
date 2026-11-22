@@ -70,5 +70,40 @@
     }
   ],
   "experimentCommit": "5cdeb05875c0a94804d43714c5116a290c1811e0",
-  "note": "experimentCommit is the sandbox main when the wiki, Pages and artifact runs were made; the benchmark/ folder was added to the sandbox afterwards (the article links that later commit)."
+  "note": "experimentCommit is the sandbox main when the wiki, Pages and artifact runs were made; the benchmark/ folder was added to the sandbox afterwards (the article links that later commit).",
+  "privateRepo": {
+    "repo": "nemolize/er-diagram-publishing-sandbox-private",
+    "visibility": "PRIVATE",
+    "note": "A private twin of the sandbox (same files as public main faa235a). The account's plan is not exposed by the API; rulesets, Pages and wikis worked on a private repository, so it is not GitHub Free (docs: those are paid-plan features in private repositories).",
+    "observations": [
+      {
+        "id": "private-ruleset",
+        "claim": "The same ruleset (pull request and er-check required) can be created on the private repository and is enforced: a direct push to main is rejected with GH013 'Changes must be made through a pull request'"
+      },
+      {
+        "id": "private-er-check",
+        "claim": "er-check runs on a pull request in the private repository and passes; mergeStateStatus CLEAN"
+      },
+      {
+        "id": "private-artifact",
+        "claim": "upload-artifact works; the download URL answers 401 without credentials; run duration 33 s",
+        "run": 45002692692
+      },
+      {
+        "id": "private-pages",
+        "claim": "POST /pages with build_type workflow succeeds on the private repository and reports public: true; the deployed SVG answers 200 without credentials while the repository page and raw.githubusercontent.com file answer 404; run duration 44 s",
+        "run": 45002695035
+      },
+      {
+        "id": "private-wiki",
+        "claim": "The wiki is available; the first page is created in the web UI as in the public repository; the workflow then pushes docs/er.md with the built-in token; the wiki page answers 404 without credentials",
+        "run": 45002793291
+      },
+      {
+        "id": "private-render",
+        "claim": "github.com draws the Mermaid block of docs/er.md for a signed-in user with access",
+        "run": null
+      }
+    ]
+  }
 }
