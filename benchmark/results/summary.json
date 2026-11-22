@@ -7,13 +7,13 @@
     "version": "1.97.0",
     "input": "live database",
     "output": "Markdown with a Mermaid block (also SVG/PNG with --er-format)",
-    "medianMs": 152,
+    "medianMs": 145,
     "idleBefore": [
-      0.913,
-      0.923,
       0.918,
+      0.923,
+      0.924,
       0.919,
-      0.916
+      0.927
     ],
     "failed": false,
     "declaredDrawn": 3,
@@ -25,13 +25,13 @@
     "version": "1.97.0",
     "input": "live database + 11 relations written in .tbls.yml",
     "output": "Markdown with a Mermaid block (also SVG/PNG with --er-format)",
-    "medianMs": 141,
+    "medianMs": 143,
     "idleBefore": [
-      0.912,
-      0.92,
+      0.918,
+      0.915,
       0.906,
-      0.913,
-      0.923
+      0.893,
+      0.917
     ],
     "failed": false,
     "declaredDrawn": 3,
@@ -43,13 +43,13 @@
     "version": "0.2.1",
     "input": "live database",
     "output": "Markdown with a Mermaid block",
-    "medianMs": 149,
+    "medianMs": 150,
     "idleBefore": [
-      0.885,
+      0.928,
       0.918,
-      0.907,
-      0.914,
-      0.919
+      0.915,
+      0.909,
+      0.916
     ],
     "failed": false,
     "declaredDrawn": 3,
@@ -60,13 +60,13 @@
     "image": "schemaspy/schemaspy@sha256:c8f98116a5cfe4b00b379eeb23b2022cdea4c9192cbccb843a75049e752479b7",
     "input": "live database (JDBC)",
     "output": "HTML site with PNG/SVG diagrams, no Mermaid",
-    "medianMs": 1595,
+    "medianMs": 1610,
     "idleBefore": [
-      0.93,
-      0.86,
-      0.877,
-      0.869,
-      0.909
+      0.921,
+      0.904,
+      0.917,
+      0.916,
+      0.895
     ],
     "failed": false,
     "declaredDrawn": 3,
@@ -96,7 +96,7 @@
       ]
     },
     "keyedSample": {
-      "edges": 13,
+      "edges": 10,
       "declaredDrawn": 3,
       "undeclaredDrawn": 10,
       "extra": []
@@ -109,11 +109,11 @@
     "scriptLines": 47,
     "medianMs": 77,
     "idleBefore": [
-      0.921,
-      0.921,
       0.924,
-      0.929,
-      0.927
+      0.917,
+      0.923,
+      0.925,
+      0.925
     ],
     "failed": false,
     "declaredDrawn": 3,
@@ -125,13 +125,13 @@
     "input": "schema file, no database",
     "output": "Mermaid from a script of our own",
     "scriptLines": 47,
-    "medianMs": 34,
+    "medianMs": 36,
     "idleBefore": [
-      0.921,
-      0.923,
-      0.917,
-      0.913,
-      0.927
+      0.924,
+      0.922,
+      0.91,
+      0.906,
+      0.915
     ],
     "failed": false,
     "declaredDrawn": 3,
@@ -150,7 +150,7 @@
     "node": "v26.13.1",
     "reps": 5,
     "minIdle": 0.75,
-    "date": "2026-11-22T06:51:23.961Z",
+    "date": "2026-11-22T07:03:00.243Z",
     "truth": {
       "declared": 3,
       "undeclared": 11
