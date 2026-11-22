@@ -180,6 +180,7 @@ try {
     const db = name.toLowerCase();
     createDb(db, sql);
     const dir = path.join(here, "results", `schemaspy-${db}`);
+    fs.rmSync(dir, { recursive: true, force: true });
     fs.mkdirSync(dir, { recursive: true });
     const r = run("docker", spyArgs(dir, db));
     if (r.status !== 0) { failures.push({ tool: `schemaspy-${name}`, status: r.status, stderr: r.stderr.slice(0, 500) }); results.schemaspyImplied[name] = { failed: true }; continue; }
