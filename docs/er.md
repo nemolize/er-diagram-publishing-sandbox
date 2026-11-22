@@ -22,6 +22,7 @@ erDiagram
   bigint id
   text email
   text name
+  text display_name
   timestamp_with_time_zone created_at
 }
 "public.addresses" {
@@ -41,6 +42,7 @@ erDiagram
   bigint category_id
   text sku
   text name
+  text display_name
   integer price_cents
 }
 "public.product_images" {
