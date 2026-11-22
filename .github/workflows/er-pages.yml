@@ -1,0 +1,47 @@
+name: er-pages
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  er-pages:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: shop
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d shop"
+          --health-interval 2s
+          --health-retries 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/regen
+      - name: Render the diagram as SVG
+        run: |
+          sudo apt-get install -y -qq graphviz
+          tbls doc --force --er-format svg
+      - name: Collect the site
+        run: |
+          mkdir site
+          cp docs/tbls/schema.svg site/
+          echo '<!doctype html><title>ER diagram</title><img src="schema.svg" alt="ER diagram">' > site/index.html
+      - uses: actions/configure-pages@v6.0.0
+      - uses: actions/upload-pages-artifact@v5.0.0
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v5.0.1
