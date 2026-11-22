@@ -93,5 +93,6 @@ erDiagram
   bigint id
   bigint user_id
   timestamp_with_time_zone updated_at
+  text note
 }
 ```
