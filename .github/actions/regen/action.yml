@@ -1,0 +1,17 @@
+name: regen
+description: Apply schema/schema.sql to the Postgres service and regenerate docs/er.md with tbls
+runs:
+  using: composite
+  steps:
+    - name: Install tbls
+      uses: k1LoW/setup-tbls@v1
+      with:
+        version: v1.97.0
+    - name: Apply the schema file
+      shell: bash
+      run: psql "postgres://postgres:postgres@127.0.0.1:5432/shop" -v ON_ERROR_STOP=1 -q -f schema/schema.sql
+    - name: Regenerate docs/er.md
+      shell: bash
+      run: |
+        tbls doc --force
+        python3 scripts/extract_mermaid.py docs/tbls/README.md docs/er.md

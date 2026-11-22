@@ -24,20 +24,6 @@ jobs:
           --health-retries 30
     steps:
       - uses: actions/checkout@v7
-      - name: Install tbls
-        uses: k1LoW/setup-tbls@v1
-        with:
-          version: v1.97.0
-      - name: Apply the schema file
-        run: psql "postgres://postgres:postgres@127.0.0.1:5432/shop" -v ON_ERROR_STOP=1 -q -f schema/schema.sql
-      - name: Regenerate the diagram
-        run: |
-          tbls doc --force
-          python3 - <<'PY'
-          import re
-          text = open("docs/tbls/README.md").read()
-          block = re.search(r"```mermaid\n.*?```", text, re.S).group(0)
-          open("docs/er.md", "w").write("# ER diagram\n\n" + block + "\n")
-          PY
+      - uses: ./.github/actions/regen
       - name: Fail when the committed diagram is stale
         run: git diff --exit-code -- docs/er.md

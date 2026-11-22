@@ -1,0 +1,40 @@
+name: er-open-pr
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  er-open-pr:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: shop
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d shop"
+          --health-interval 2s
+          --health-retries 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/regen
+      - name: Open a pull request with the regenerated diagram
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/er.md
+          git diff --cached --quiet && { echo "diagram is current"; exit 0; }
+          git switch -c regen-er-diagram
+          git commit -m "Regenerate docs/er.md"
+          git push -f origin regen-er-diagram
+          gh pr create --base main --head regen-er-diagram --title "Regenerate docs/er.md" --body "Opened by a workflow with the built-in token."
