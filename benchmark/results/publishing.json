@@ -78,11 +78,13 @@
     "observations": [
       {
         "id": "private-ruleset",
-        "claim": "The same ruleset (pull request and er-check required) can be created on the private repository and is enforced: a direct push to main is rejected with GH013 'Changes must be made through a pull request'"
+        "claim": "The same ruleset (pull request and er-check required) can be created on the private repository and is enforced: a direct push to main is rejected with GH013 'Changes must be made through a pull request'",
+        "run": null
       },
       {
         "id": "private-er-check",
-        "claim": "er-check runs on a pull request in the private repository and passes; mergeStateStatus CLEAN"
+        "claim": "er-check runs on a pull request in the private repository and passes; mergeStateStatus CLEAN",
+        "run": 45002834227
       },
       {
         "id": "private-artifact",
