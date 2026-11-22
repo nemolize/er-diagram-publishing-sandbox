@@ -122,7 +122,11 @@ async function measure(name, command, args, opts = {}) {
 const timing = (m) => ({ medianMs: medianMs(m), idleBefore: m.idleBefore, failed: m.failed });
 
 const spyArgs = (dir, db) => ["run", "--rm", "-v", `${dir}:/output`, SCHEMASPY_IMAGE, "-t", "pgsql", "-host", "host.docker.internal", "-port", String(PORT), "-db", db, "-u", "postgres", "-p", "postgres", "-s", "public"];
-const impliedEdges = (dir) => dotEdges(path.join(dir, "diagrams", "summary", "relationships.implied.large.dot"));
+const realEdges = (dir) => dotEdges(path.join(dir, "diagrams", "summary", "relationships.real.large.dot"));
+const impliedEdges = (dir) => {
+  const real = new Set(realEdges(dir));
+  return dotEdges(path.join(dir, "diagrams", "summary", "relationships.implied.large.dot")).filter((e) => !real.has(e));
+};
 const dirBytes = (dir) => Number(sh("sh", ["-c", `du -sk ${dir} | cut -f1`]).stdout.trim()) * 1024;
 const fileCount = (dir) => Number(sh("sh", ["-c", `find ${dir} -type f | wc -l`]).stdout.trim());
 
@@ -166,7 +170,7 @@ try {
     if (!m.failed) {
       const log = m.last.stdout + m.last.stderr;
       fs.writeFileSync(path.join(outputs, "schemaspy.log"), log);
-      const found = new Set([...dotEdges(path.join(dir, "diagrams", "summary", "relationships.real.large.dot")), ...impliedEdges(dir)]);
+      const found = new Set([...realEdges(dir), ...impliedEdges(dir)]);
       Object.assign(results.schemaspy, score(found), {
         version: /SchemaSpy ([\d.]+) with/.exec(log)?.[1], filesWritten: fileCount(dir), bytesWritten: dirBytes(dir),
         impliedEdges: impliedEdges(dir).length, logProblems: log.split("\n").filter((l) => /\b(ERROR|WARN)\b +-/.test(l)).map((l) => l.slice(0, 110)),
@@ -185,7 +189,7 @@ try {
     const r = run("docker", spyArgs(dir, db));
     if (r.status !== 0) { failures.push({ tool: `schemaspy-${name}`, status: r.status, stderr: r.stderr.slice(0, 500) }); results.schemaspyImplied[name] = { failed: true }; continue; }
     const edges = impliedEdges(dir);
-    results.schemaspyImplied[name] = name === "keyedSample" ? { edges: edges.length, ...score(new Set(edges)) } : { edges };
+    results.schemaspyImplied[name] = name === "keyedSample" ? { edges: edges.length, ...score(new Set([...realEdges(dir), ...edges])) } : { edges };
     if (name === "keyedSample") fs.writeFileSync(path.join(outputs, "schemaspy-keyed-implied.txt"), edges.join("\n") + "\n");
   }
   {
